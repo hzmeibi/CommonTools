@@ -1,2 +1,23 @@
 <resources>
+    <style name="MyDialogTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:windowIsFloating">true</item><!-- 悬浮在activity之上 -->
+        <item name="android:backgroundDimEnabled">true</item><!-- 开启背景颜色 -->
+        <item name="android:windowNoTitle">true</item><!-- 没有标题 -->
+    </style>
+
+    <style name="MyNumberProgressBarDefault">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="max">100</item>
+        <item name="progress">0</item>
+        <item name="progress_unreached_color">#ff6900</item>
+        <item name="progress_reached_color">#ff6900</item>
+        <item name="progress_text_visibility">invisible</item>
+        <item name="progress_text_size">0sp</item>
+        <item name="progress_text_color">#00a2ff</item>
+        <item name="progress_reached_bar_height">3dp</item>
+        <item name="progress_unreached_bar_height">0dp</item>
+    </style>
 </resources>

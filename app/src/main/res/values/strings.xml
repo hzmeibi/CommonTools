@@ -1,2 +1,4 @@
 <resources>
+    <string name="my_webview_load">加载中...</string>
+    <string name="my_exit_app">连按两次,退出程序...</string>
 </resources>
