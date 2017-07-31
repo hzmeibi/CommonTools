@@ -1,6 +1,8 @@
 package com.tools.view.webview.JsBridge;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.webkit.WebView;
 
 /**
@@ -17,10 +19,20 @@ public class MyWebViewClient extends BridgeWebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if (mMyCallBack.onPageHeaders(url) != null) {
-            view.loadUrl(url, mMyCallBack.onPageHeaders(url));
+        boolean isWeiXin = url.startsWith("weixin://wap/pay?");
+        if (isWeiXin) {
+            //支持h5微信支付 跳转微信支付
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            view.getContext().startActivity(intent);
+            return true;
+        } else {
+            if (mMyCallBack.onPageHeaders(url) != null) {
+                view.loadUrl(url, mMyCallBack.onPageHeaders(url));
+            }
+            return super.shouldOverrideUrlLoading(view, url);
         }
-        return super.shouldOverrideUrlLoading(view, url);
     }
 
     @Override
@@ -37,38 +49,4 @@ public class MyWebViewClient extends BridgeWebViewClient {
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
         view.loadUrl(mMyCallBack.onPageError(failingUrl));
     }
-
-
-//    /**
-//     * onPageHeaders
-//     *
-//     * @param url url
-//     * @return HttpHeaders
-//     */
-//    public abstract Map<String, String> onPageHeaders(String url);
-//
-//    /**
-//     * start
-//     *
-//     * @param view WebView
-//     * @param url  url
-//     * @return
-//     */
-//    public abstract void start(WebView view, String url);
-//
-//    /**
-//     * finish
-//     *
-//     * @param view WebView
-//     * @param url  url
-//     */
-//    public abstract void finish(WebView view, String url);
-//
-//    /**
-//     * onPageError
-//     *
-//     * @param url url
-//     * @return errorUrl
-//     */
-//    public abstract String onPageError(String url);
 }

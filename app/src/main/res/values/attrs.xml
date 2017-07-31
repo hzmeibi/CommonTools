@@ -15,4 +15,37 @@
             <enum name="invisible" value="1"/>
         </attr>
     </declare-styleable>
+
+    <!-- 自定义圆形ImageView -->
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension"/>
+        <attr name="civ_border_color" format="color"/>
+        <attr name="civ_border_overlay" format="boolean"/>
+        <attr name="civ_fill_color" format="color"/>
+    </declare-styleable>
+
+    <!-- 自定义矩形圆角ImageView -->
+    <declare-styleable name="MyImageView">
+        <attr name="customImageViewStyle" format="reference"/>
+        <attr name="circle" format="boolean"/><!--是否是圆型-->
+        <attr name="radius" format="dimension"/><!--圆角大小-->
+        <attr name="border_overlay" format="boolean"/><!--是否包含边界层 -->
+        <attr name="border_color" format="color"/><!--边界颜色-->
+        <attr name="border_width" format="dimension"/><!--边界宽度-->
+    </declare-styleable>
+
+    <!--自定义ViewPager -->
+    <declare-styleable name="ViewPager">
+        <attr name="orientation">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <!--自定义翻转视图 -->
+    <declare-styleable name="easy_flip_view">
+        <attr name="flipOnTouch" format="boolean"/>
+        <attr name="flipDuration" format="integer"/>
+        <attr name="flipEnabled" format="boolean"/>
+    </declare-styleable>
 </resources>

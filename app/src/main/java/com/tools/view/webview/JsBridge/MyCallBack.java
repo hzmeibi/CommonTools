@@ -48,5 +48,4 @@ public abstract class MyCallBack {
      * @return errorUrl
      */
     public abstract String onPageError(String url);
-
 }
