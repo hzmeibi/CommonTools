@@ -17,9 +17,9 @@ import com.tools.R;
  * http://github.com/wajahatkarim3/EasyFlipView
  * 视图翻转 EasyFlipView 下只能两个View
  */
-public class EasyFlipView extends FrameLayout {
+public class FlipView extends FrameLayout {
 
-    public static final String TAG = EasyFlipView.class.getSimpleName();
+    public static final String TAG = FlipView.class.getSimpleName();
 
     public static final int DEFAULT_FLIP_DURATION = 400;
 
@@ -44,13 +44,13 @@ public class EasyFlipView extends FrameLayout {
 
     private FlipState mFlipState = FlipState.FRONT_SIDE;
 
-    public EasyFlipView(Context context) {
+    public FlipView(Context context) {
         super(context);
         this.context = context;
         init(context, null);
     }
 
-    public EasyFlipView(Context context, AttributeSet attrs) {
+    public FlipView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         init(context, attrs);

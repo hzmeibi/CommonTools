@@ -1,6 +1,7 @@
 ***每次提交 改修versionCode  versionName
 
--------------
+--------------------------init-------------------------
+更新时间：2017-07-06
 base:
 BaseActivity
 BaseFragment
@@ -31,3 +32,23 @@ MyDialogView
 MyNumberProgressBar
 MyProgressDialog
 MyToastView
+
+-------------------------update---------------------
+更新时间：2017-07-31
+新增内容：
+		1.CommonBaseAdapter
+		2.CommonPageAdapter
+		3.ImageUtil(glide)
+		4.EasyFlipView
+		5.ViewPager
+		6.GestureUtil
+更新内容：
+		1.JsWebView 新增微信支付跳转
+
+-------------------------update---------------------
+更新时间：2017-08-02
+新增内容：
+		1.SwipeLayout
+更新内容：
+		1.删除GestureUtil
+		2.EasyFlipView 更名为FlipView

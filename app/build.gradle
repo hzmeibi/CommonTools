@@ -33,5 +33,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.8.0'
     //photoview
     compile 'com.github.chrisbanes:PhotoView:2.1.2'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
 
 }

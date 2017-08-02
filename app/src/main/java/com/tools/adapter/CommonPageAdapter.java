@@ -45,4 +45,9 @@ public class CommonPageAdapter<T> extends PagerAdapter {
     }
 
 
+    public void reFresh(List<View> viewList) {
+        mListViews = viewList;
+        notifyDataSetChanged();
+    }
+
 }
