@@ -12,6 +12,7 @@ import android.webkit.CookieManager;
 import android.webkit.WebSettings;
 import android.widget.LinearLayout;
 
+import com.tools.utils.LogUtil;
 import com.tools.view.webview.JsBridge.BridgeHandler;
 import com.tools.view.webview.JsBridge.BridgeWebView;
 import com.tools.view.webview.JsBridge.CallBackFunction;
@@ -39,6 +40,7 @@ public class MyWebView extends LinearLayout {
     private MyCallBack mMyCallBack;
     private MyWebViewClient mMyWebViewClient;
     private MyWebChromeClient mMyWebChromeClient;
+    private goBackListener mGoBackListener;
     private List<String> mainPages;
 
     public MyWebView(Context context) {
@@ -90,39 +92,39 @@ public class MyWebView extends LinearLayout {
 
         addView(mWebView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        //返回键监听
+        //返回键监听 主界面返回提醒
         mWebView.setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-                        //如果当前url是主界面 提示退出程序 并且处理返回键
-                        boolean isBack = true;//是否可以返回上一个界面
-                        if (mainPages != null && mainPages.size() >= 0) {
-                            String curUrl = mWebView.getUrl();
-                            for (String url : mainPages) {
-                                if (curUrl.equals(url)) {
-                                    isBack = false;
-                                    break;
-                                }
+                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN && keyEvent.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+                    //如果当前url是主界面 提示退出程序 并且处理返回键
+                    boolean isBack = true;//是否可以返回上一个界面
+                    if (mainPages != null && mainPages.size() >= 0) {
+                        String curUrl = mWebView.getUrl();
+                        LogUtil.i("curUrl: " + curUrl);
+                        for (String url : mainPages) {
+                            if (curUrl.contains(url)) {
+                                isBack = false;
+                                break;
                             }
                         }
-                        if (isBack && mWebView.canGoBack()) {
-                            //不能返回，mWebView能够回退 则webview处理返回事件
-                            mWebView.goBack();
-                            return true;
-                        } else {
-                            //可以返回 具体返回操作在activity中处理
-//                            exitApp();//连按两次退出app
-                            return false;
+                    }
+                    if (isBack && mWebView.canGoBack()) {
+                        mWebView.goBack();
+                        if (mGoBackListener != null) {
+                            mGoBackListener.goBack(false);
+                        }
+                    } else {
+                        //连按两次退出app
+                        if (mGoBackListener != null) {
+                            mGoBackListener.goBack(true);
                         }
                     }
                 }
                 return false;
             }
         });
-
-        loadUrl(url);
+        loadUrl(url);//load
     }
 
 
@@ -130,9 +132,18 @@ public class MyWebView extends LinearLayout {
      * 添加首页url 控制返回
      *
      * @param pages
+     * @param goBackListener
      */
-    public void addMainPage(List<String> pages) {
+    public void addMainPage(List<String> pages, goBackListener goBackListener) {
         mainPages = pages;
+        mGoBackListener = goBackListener;
+    }
+
+    /**
+     * 监听是否退出程序
+     */
+    public interface goBackListener {
+        void goBack(boolean isExitApp);
     }
 
     public BridgeWebView getWebView() {

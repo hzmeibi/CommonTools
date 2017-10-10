@@ -116,6 +116,9 @@ public class AppManagerUtil {
      * 结束所有Activity
      */
     public void killAllActivity() {
+        if (mActivityStack == null) {
+            return;
+        }
         for (int i = 0, size = mActivityStack.size(); i < size; i++) {
             if (null != mActivityStack.get(i)) {
                 mActivityStack.get(i).finish();
