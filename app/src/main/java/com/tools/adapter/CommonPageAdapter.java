@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class CommonPageAdapter<T> extends PagerAdapter {
     private List<View> mListViews;
+    private int mChildCount = 0;
 
     /**
      * 构造方法，参数是我们的页卡，这样比较方便。
@@ -52,7 +53,16 @@ public class CommonPageAdapter<T> extends PagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        return POSITION_NONE;
+        if (mChildCount > 0) {
+            mChildCount--;
+            return POSITION_NONE;
+        }
+        return super.getItemPosition(object);
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        mChildCount = getCount();
+    }
 }

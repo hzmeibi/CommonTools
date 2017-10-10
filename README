@@ -59,3 +59,12 @@ MyToastView
 		1.SelectableRoundedImageView
 更新内容：
 		1.修复CommonPagerAdapter不能更新bug
+
+-------------------------update---------------------
+更新时间：2017-10-10
+新增内容：
+		1.NavigationTabStrip
+		2.TextLinkUtil
+更新内容：
+		1.优化WebView加载URL，支持H5调用微信、拨打电话
+

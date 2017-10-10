@@ -27,18 +27,14 @@ import java.io.File;
  * 支持加载图片、Gif、Bitmap
  */
 public class ImageUtil {
-    private Integer image_load = R.anim.image_load;//加载动画
-    private Integer ic_loading;//加载中的图片
-    private Integer ic_failed;//加载失败的图片
+    private static Integer image_load = R.anim.image_load;//加载动画
+    private static Integer ic_loading;//加载中的图片
+    private static Integer ic_failed;//加载失败的图片
 
-    public ImageUtil() {
-    }
-
-    public ImageUtil init(Integer image_load, Integer ic_loading, Integer ic_failed) {
-        this.image_load = image_load;
-        this.ic_loading = ic_loading;
-        this.ic_failed = ic_failed;
-        return this;
+    public static void init(Integer imageLoad, Integer loading, Integer failed) {
+        image_load = imageLoad;
+        ic_loading = loading;
+        ic_failed = failed;
     }
 
     /**
@@ -46,7 +42,7 @@ public class ImageUtil {
      * PREFER_ARGB_8888 高质量
      * PREFER_RGB_565 低质量
      */
-    private DecodeFormat decodeFormat = DecodeFormat.PREFER_ARGB_8888;//默认图片质量 - 高质量
+    private static DecodeFormat decodeFormat = DecodeFormat.PREFER_ARGB_8888;//默认图片质量 - 高质量
     /**
      * DiskCacheStrategy:
      * ALl 保存原图到缓存和转换后保存到缓存
@@ -54,7 +50,7 @@ public class ImageUtil {
      * SOURCE 仅保存原图到缓存
      * RESULT 转换后保存到缓存
      */
-    private DiskCacheStrategy diskCacheStrategy = DiskCacheStrategy.SOURCE;//默认图片缓存策略
+    private static DiskCacheStrategy diskCacheStrategy = DiskCacheStrategy.SOURCE;//默认图片缓存策略
 
 
     /**
@@ -63,7 +59,7 @@ public class ImageUtil {
      * @param object    加载对象
      * @param imageView 显示控件
      */
-    public void loadImage(Object object, ImageView imageView) {
+    public static void loadImage(Object object, ImageView imageView) {
         load(imageView.getContext(), object, imageView, 0, 0, ic_loading, ic_failed, image_load, null, decodeFormat, null, diskCacheStrategy);
     }
 
@@ -77,7 +73,7 @@ public class ImageUtil {
      * @param width          width
      * @param height         height
      */
-    public void loadImage(Object object, ImageView imageView, int failedId, Transformation transformation, int width, int height) {
+    public static void loadImage(Object object, ImageView imageView, int failedId, Transformation transformation, int width, int height) {
         load(imageView.getContext(), object, imageView, width, height, failedId, failedId, image_load, false, decodeFormat, transformation, diskCacheStrategy);
     }
 
@@ -89,7 +85,7 @@ public class ImageUtil {
      * @param failedId       占位图
      * @param transformation 转换器  GlideCircleTransform-圆形  GlideRoundTransform-圆角
      */
-    public void loadImage(Object object, ImageView imageView, int failedId, Transformation transformation) {
+    public static void loadImage(Object object, ImageView imageView, int failedId, Transformation transformation) {
         load(imageView.getContext(), object, imageView, 0, 0, failedId, failedId, image_load, false, decodeFormat, transformation, diskCacheStrategy);
     }
 
@@ -100,7 +96,7 @@ public class ImageUtil {
      * @param imageView 显示控件
      * @param failedId  占位图
      */
-    public void loadImage(Object object, ImageView imageView, int failedId) {
+    public static void loadImage(Object object, ImageView imageView, int failedId) {
         load(imageView.getContext(), object, imageView, 0, 0, failedId, failedId, image_load, null, decodeFormat, null, diskCacheStrategy);
     }
 
@@ -113,7 +109,7 @@ public class ImageUtil {
      * @param width     宽
      * @param height    高
      */
-    public void loadImage(Object object, ImageView imageView, int failedId, int width, int height) {
+    public static void loadImage(Object object, ImageView imageView, int failedId, int width, int height) {
         load(imageView.getContext(), object, imageView, width, height, failedId, failedId, image_load, null, decodeFormat, null, diskCacheStrategy);
     }
 
@@ -125,7 +121,7 @@ public class ImageUtil {
      * @param decodeFormat      图片质量
      * @param diskCacheStrategy 硬盘缓存策略
      */
-    public void loadImage(Object object, ImageView imageView, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
+    public static void loadImage(Object object, ImageView imageView, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
         load(imageView.getContext(), object, imageView, 0, 0, ic_loading, ic_failed, image_load, null, decodeFormat, null, diskCacheStrategy);
     }
 
@@ -140,7 +136,7 @@ public class ImageUtil {
      * @param decodeFormat      图片质量
      * @param diskCacheStrategy 硬盘缓存策略
      */
-    public void loadImage(Object object, ImageView imageView, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
+    public static void loadImage(Object object, ImageView imageView, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
         load(imageView.getContext(), object, imageView, width, height, ic_loading, ic_failed, image_load, null, decodeFormat, null, diskCacheStrategy);
     }
 
@@ -155,7 +151,7 @@ public class ImageUtil {
      * @param decodeFormat      图片质量
      * @param diskCacheStrategy 硬盘缓存策略
      */
-    public void loadGif(Object object, ImageView imageView, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
+    public static void loadGif(Object object, ImageView imageView, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
         load(imageView.getContext(), object, imageView, width, height, ic_loading, ic_failed, image_load, true, decodeFormat, null, diskCacheStrategy);
     }
 
@@ -169,7 +165,7 @@ public class ImageUtil {
      * @param decodeFormat      图片质量
      * @param diskCacheStrategy 硬盘缓存策略
      */
-    public void loadBitmap(Object object, ImageView imageView, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
+    public static void loadBitmap(Object object, ImageView imageView, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
         load(imageView.getContext(), object, imageView, width, height, ic_loading, ic_failed, image_load, false, decodeFormat, null, diskCacheStrategy);
     }
 
@@ -186,7 +182,7 @@ public class ImageUtil {
      * @param transformation    图片转换
      * @param diskCacheStrategy 硬盘缓存策略
      */
-    public void loadCircleImage(Object object, ImageView imageView, int width, int height, Boolean isGif, DecodeFormat decodeFormat, Transformation transformation, DiskCacheStrategy diskCacheStrategy) {
+    public static void loadCircleImage(Object object, ImageView imageView, int width, int height, Boolean isGif, DecodeFormat decodeFormat, Transformation transformation, DiskCacheStrategy diskCacheStrategy) {
         load(imageView.getContext(), object, imageView, width, height, ic_loading, ic_failed, image_load, isGif, decodeFormat, transformation, diskCacheStrategy);
     }
 
@@ -206,7 +202,7 @@ public class ImageUtil {
      * @param transformation    图片转换
      * @param diskcacheStrategy 硬盘缓存策略
      */
-    private void load(Context context, Object loadObj, ImageView imageView, int overrideW, int overrideH, int holderId, int errorId, int animId, Boolean asGif, DecodeFormat format, Transformation transformation, DiskCacheStrategy diskcacheStrategy) {
+    private static void load(Context context, Object loadObj, ImageView imageView, int overrideW, int overrideH, int holderId, int errorId, int animId, Boolean asGif, DecodeFormat format, Transformation transformation, DiskCacheStrategy diskcacheStrategy) {
         final RequestManager manager = Glide.with(context);
 
         DrawableTypeRequest request = null;
@@ -253,7 +249,7 @@ public class ImageUtil {
      * @param diskcacheStrategy 硬盘缓存策略
      */
     @SuppressWarnings("unchecked")
-    private void load(GenericRequestBuilder request, ImageView imageView, int overrideW, int overrideH, int holderId, int errorId, int animId, Boolean asGif, DecodeFormat format, Transformation transformation, DiskCacheStrategy diskcacheStrategy) {
+    private static void load(GenericRequestBuilder request, ImageView imageView, int overrideW, int overrideH, int holderId, int errorId, int animId, Boolean asGif, DecodeFormat format, Transformation transformation, DiskCacheStrategy diskcacheStrategy) {
         // 通过builder一步一步构建，最后调用into才能设置生效；如果只是request调into不行
         GenericRequestBuilder requestBuilder = null;
         if (holderId != 0) {

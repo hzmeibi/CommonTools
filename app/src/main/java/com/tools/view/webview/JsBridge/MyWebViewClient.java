@@ -19,19 +19,27 @@ public class MyWebViewClient extends BridgeWebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        boolean isWeiXin = url.startsWith("weixin://wap/pay?");
-        if (isWeiXin) {
-            //支持h5微信支付 跳转微信支付
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            view.getContext().startActivity(intent);
+        if (mMyCallBack.shouldOverrideUrlLoading(view, url)) {
+            //已经重载被
             return true;
         } else {
-            if (mMyCallBack.onPageHeaders(url) != null) {
-                view.loadUrl(url, mMyCallBack.onPageHeaders(url));
+            //部分h5的url、需要重新加载
+            if (url.startsWith("weixin://wap/pay?")) {
+                //支持h5微信支付 跳转微信支付
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                view.getContext().startActivity(intent);
+                return true;
+            } else if (url.startsWith("tel:")) {
+                //拨打电话
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                view.getContext().startActivity(intent);
+                return true;
+            } else {
+                if (mMyCallBack.onPageHeaders(url) != null) {
+                    view.loadUrl(url, mMyCallBack.onPageHeaders(url));
+                }
+                return super.shouldOverrideUrlLoading(view, url);
             }
-            return super.shouldOverrideUrlLoading(view, url);
         }
     }
 

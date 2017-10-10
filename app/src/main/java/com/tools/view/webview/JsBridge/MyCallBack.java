@@ -10,6 +10,15 @@ import java.util.Map;
  */
 public abstract class MyCallBack {
     /**
+     * shouldOverrideUrlLoading
+     *
+     * @param view
+     * @param url
+     * @return
+     */
+    public abstract boolean shouldOverrideUrlLoading(WebView view, String url);
+
+    /**
      * onPageHeaders
      *
      * @param url url
