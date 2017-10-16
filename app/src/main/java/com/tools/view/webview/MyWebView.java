@@ -121,7 +121,7 @@ public class MyWebView extends LinearLayout {
                         }
                     }
                 }
-                return false;
+                return true;
             }
         });
         loadUrl(url);//load
