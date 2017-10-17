@@ -111,14 +111,10 @@ public class MyWebView extends LinearLayout {
                     }
                     if (isBack && mWebView.canGoBack()) {
                         mWebView.goBack();
-                        if (mGoBackListener != null) {
-                            mGoBackListener.goBack(false);
-                        }
+                        mMyCallBack.goBack(false);
                     } else {
                         //连按两次退出app
-                        if (mGoBackListener != null) {
-                            mGoBackListener.goBack(true);
-                        }
+                        mMyCallBack.goBack(true);
                     }
                 }
                 return true;
@@ -132,11 +128,9 @@ public class MyWebView extends LinearLayout {
      * 添加首页url 控制返回
      *
      * @param pages
-     * @param goBackListener
      */
-    public void addMainPage(List<String> pages, goBackListener goBackListener) {
+    public void addMainPage(List<String> pages) {
         mainPages = pages;
-        mGoBackListener = goBackListener;
     }
 
     /**

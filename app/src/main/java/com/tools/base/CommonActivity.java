@@ -1,21 +1,60 @@
 package com.tools.base;
 
+import android.os.Bundle;
 import android.os.Process;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.tools.R;
 import com.tools.utils.AppManagerUtil;
 import com.tools.utils.PermissionsUtil;
+import com.tools.view.MyProgressDialog;
 import com.tools.view.MyToastView;
 
 /**
  * Activity 基类
+ * 1.show Progress
+ * 2.show Toast
+ * 3.exitApp
+ * 4.check Permission
  */
-public class BaseActivity extends AppCompatActivity implements PermissionsUtil.PermissionCallbacks {
+public class CommonActivity extends AppCompatActivity implements PermissionsUtil.PermissionCallbacks {
     //记录退出的时候的两次点击的间隔时间
     private long exitTime = 0;
     private MyToastView mMyToastView;
+    private MyProgressDialog mMyProgressDialog;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AppManagerUtil.getInstance().addActivity(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManagerUtil.getInstance().killActivity(this);
+    }
+
+    /**
+     * show progress
+     *
+     * @param message
+     */
+    public void showProgress(int message) {
+        if (mMyProgressDialog == null) {
+            mMyProgressDialog = new MyProgressDialog(this);
+        }
+        mMyProgressDialog.showProgress(message);
+    }
+
+    /**
+     * dismiss progress
+     */
+    public void dismissProgress() {
+        mMyProgressDialog.dismiss();
+    }
 
     /**
      * show Toast

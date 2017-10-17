@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * 提供回调
- * 加载状态  开始、成功、失败
+ * 加载状态  开始、成功、失败 回退
  */
 public abstract class MyCallBack {
     /**
@@ -57,4 +57,11 @@ public abstract class MyCallBack {
      * @return errorUrl
      */
     public abstract String onPageError(String url);
+
+    /**
+     * goBack
+     *
+     * @param isExitApp
+     */
+    public abstract void goBack(boolean isExitApp);
 }

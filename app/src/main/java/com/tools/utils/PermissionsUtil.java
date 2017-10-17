@@ -11,13 +11,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
+import com.tools.base.CommonActivity;
+
 import java.util.ArrayList;
 
 /**
  * 权限管理
  * https://github.com/googlesamples/easypermissions
  * http://blog.csdn.net/qq_25804863/article/details/53517129
- * 使用方法参考{@link com.tools.base.BaseActivity }
+ * 使用方法参考{@link CommonActivity }
  */
 public class PermissionsUtil {
     //常用权限申请

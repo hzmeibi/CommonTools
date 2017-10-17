@@ -13,9 +13,8 @@ import java.util.Stack;
  * Activity 管理类
  */
 public class AppManagerUtil {
-    private static String TAG = "AppManager";
     private static Stack<Activity> mActivityStack;
-    private static AppManagerUtil sMAppManagerUtil;
+    private static volatile AppManagerUtil mAppManager;
 
     private AppManagerUtil() {
     }
@@ -24,10 +23,14 @@ public class AppManagerUtil {
      * 单一实例
      */
     public static AppManagerUtil getInstance() {
-        if (sMAppManagerUtil == null) {
-            sMAppManagerUtil = new AppManagerUtil();
+        if (mAppManager == null) {
+            synchronized (AppManagerUtil.class) {
+                if (mAppManager == null) {
+                    mAppManager = new AppManagerUtil();
+                }
+            }
         }
-        return sMAppManagerUtil;
+        return mAppManager;
     }
 
     /**
@@ -81,7 +84,6 @@ public class AppManagerUtil {
     public void killTopActivity() {
         Activity activity = mActivityStack.lastElement();
         killActivity(activity);
-//		PictureAirLog.d(TAG, "mactivitystack size = "+mActivityStack.size());
     }
 
     /**
@@ -93,8 +95,6 @@ public class AppManagerUtil {
             if (!activity.isFinishing()) {//如果正在finish的话，就不需要再finish
                 activity.finish();
             }
-//			PictureAirLog.out("finished-----" + activity.toString());
-            activity = null;
         }
     }
 
@@ -102,9 +102,7 @@ public class AppManagerUtil {
      * 结束指定类名的Activity
      */
     public void killActivity(Class<?> cls) {
-        System.out.println("kill activity" + cls + "===========" + mActivityStack.size());
         for (Activity activity : mActivityStack) {
-            System.out.println("in mactivitystack = " + activity.getClass());
             if (activity.getClass().equals(cls)) {
                 killActivity(activity);
                 break;
@@ -116,9 +114,6 @@ public class AppManagerUtil {
      * 结束所有Activity
      */
     public void killAllActivity() {
-        if (mActivityStack == null) {
-            return;
-        }
         for (int i = 0, size = mActivityStack.size(); i < size; i++) {
             if (null != mActivityStack.get(i)) {
                 mActivityStack.get(i).finish();
@@ -132,7 +127,7 @@ public class AppManagerUtil {
      *
      * @param specialActivity 指定的activity
      */
-    public static void killOtherActivity(Class<?> specialActivity) {
+    public void killOtherActivity(Class<?> specialActivity) {
         Iterator<Activity> iterator = mActivityStack.iterator();
         while (iterator.hasNext()) {
             Activity activity = (Activity) iterator.next();
@@ -149,8 +144,7 @@ public class AppManagerUtil {
     public void AppExit(Context context) {
         try {
             killAllActivity();
-            ActivityManager activityMgr = (ActivityManager) context
-                    .getSystemService(Context.ACTIVITY_SERVICE);
+            ActivityManager activityMgr = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             activityMgr.restartPackage(context.getPackageName());
             System.exit(0);
         } catch (Exception e) {

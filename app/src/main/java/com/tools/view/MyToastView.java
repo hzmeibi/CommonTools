@@ -63,8 +63,9 @@ public class MyToastView extends Toast {
 
     /**
      * show toast
+     * 强制使用ID 方便维护
      *
-     * @param id
+     * @paramid
      */
     public void show(int id) {
         show(0, id, 100);

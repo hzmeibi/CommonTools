@@ -22,16 +22,6 @@ public class MyProgressDialog {
     /**
      * 实现了弱引用，不会造成内存泄漏。
      *
-     * @param message
-     */
-    public void showProgress(String message) {
-        showProgress();
-        setMessage(message);
-    }
-
-    /**
-     * 实现了弱引用，不会造成内存泄漏。
-     *
      * @param id
      */
     public void showProgress(int id) {
