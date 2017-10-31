@@ -4,13 +4,12 @@ import android.os.Bundle;
 import android.os.Process;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
-import com.tools.R;
 import com.tools.utils.AppManagerUtil;
 import com.tools.utils.PermissionsUtil;
 import com.tools.view.MyProgressDialog;
 import com.tools.view.MyToastView;
+import com.trello.rxlifecycle.components.support.RxFragmentActivity;
 
 /**
  * Activity 基类
@@ -19,7 +18,7 @@ import com.tools.view.MyToastView;
  * 3.exitApp
  * 4.check Permission
  */
-public class CommonActivity extends AppCompatActivity implements PermissionsUtil.PermissionCallbacks {
+public class CommonActivity extends RxFragmentActivity implements PermissionsUtil.PermissionCallbacks {
     //记录退出的时候的两次点击的间隔时间
     private long exitTime = 0;
     private MyToastView mMyToastView;
@@ -71,9 +70,9 @@ public class CommonActivity extends AppCompatActivity implements PermissionsUtil
     /**
      * 双击退出app
      */
-    public void exitApp() {
+    public void exitApp(int id) {
         if ((System.currentTimeMillis() - exitTime) > 1000) {
-            showToast(R.string.my_exit_app);
+            showToast(id);
             exitTime = System.currentTimeMillis();
         } else {
             AppManagerUtil.getInstance().killAllActivity();

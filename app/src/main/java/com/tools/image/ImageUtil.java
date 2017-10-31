@@ -28,14 +28,6 @@ import java.io.File;
  */
 public class ImageUtil {
     private static Integer image_load = R.anim.image_load;//加载动画
-    private static Integer ic_loading;//加载中的图片
-    private static Integer ic_failed;//加载失败的图片
-
-    public static void init(Integer imageLoad, Integer loading, Integer failed) {
-        image_load = imageLoad;
-        ic_loading = loading;
-        ic_failed = failed;
-    }
 
     /**
      * DecodeFormat:
@@ -58,9 +50,21 @@ public class ImageUtil {
      *
      * @param object    加载对象
      * @param imageView 显示控件
+     * @param failedId  占位图
      */
-    public static void loadImage(Object object, ImageView imageView) {
-        load(imageView.getContext(), object, imageView, 0, 0, ic_loading, ic_failed, image_load, null, decodeFormat, null, diskCacheStrategy);
+    public static void loadImage(Object object, ImageView imageView, int failedId) {
+        load(imageView.getContext(), object, imageView, 0, 0, failedId, failedId, image_load, null, decodeFormat, null, diskCacheStrategy);
+    }
+
+    /**
+     * 加载图片
+     *
+     * @param object    加载对象
+     * @param imageView 显示控件
+     * @param failedId  占位图
+     */
+    public static void loadImage(Object object, ImageView imageView, int failedId, int loadingId) {
+        load(imageView.getContext(), object, imageView, 0, 0, loadingId, failedId, image_load, null, decodeFormat, null, diskCacheStrategy);
     }
 
     /**
@@ -95,17 +99,6 @@ public class ImageUtil {
      * @param object    加载对象
      * @param imageView 显示控件
      * @param failedId  占位图
-     */
-    public static void loadImage(Object object, ImageView imageView, int failedId) {
-        load(imageView.getContext(), object, imageView, 0, 0, failedId, failedId, image_load, null, decodeFormat, null, diskCacheStrategy);
-    }
-
-    /**
-     * 加载图片
-     *
-     * @param object    加载对象
-     * @param imageView 显示控件
-     * @param failedId  占位图
      * @param width     宽
      * @param height    高
      */
@@ -118,11 +111,12 @@ public class ImageUtil {
      *
      * @param object            加载对象
      * @param imageView         显示控件
+     * @param failedId          占位图
      * @param decodeFormat      图片质量
      * @param diskCacheStrategy 硬盘缓存策略
      */
-    public static void loadImage(Object object, ImageView imageView, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
-        load(imageView.getContext(), object, imageView, 0, 0, ic_loading, ic_failed, image_load, null, decodeFormat, null, diskCacheStrategy);
+    public static void loadImage(Object object, ImageView imageView, int failedId, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
+        load(imageView.getContext(), object, imageView, 0, 0, failedId, failedId, image_load, null, decodeFormat, null, diskCacheStrategy);
     }
 
 
@@ -131,13 +125,14 @@ public class ImageUtil {
      *
      * @param object            加载对象
      * @param imageView         显示控件
+     * @param failedId          占位图
      * @param width             重设宽度
      * @param height            重设高度
      * @param decodeFormat      图片质量
      * @param diskCacheStrategy 硬盘缓存策略
      */
-    public static void loadImage(Object object, ImageView imageView, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
-        load(imageView.getContext(), object, imageView, width, height, ic_loading, ic_failed, image_load, null, decodeFormat, null, diskCacheStrategy);
+    public static void loadImage(Object object, ImageView imageView, int failedId, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
+        load(imageView.getContext(), object, imageView, width, height, failedId, failedId, image_load, null, decodeFormat, null, diskCacheStrategy);
     }
 
 
@@ -146,13 +141,14 @@ public class ImageUtil {
      *
      * @param object            加载对象
      * @param imageView         显示控件
+     * @param failedId          占位图
      * @param width             重设宽度
      * @param height            重设高度
      * @param decodeFormat      图片质量
      * @param diskCacheStrategy 硬盘缓存策略
      */
-    public static void loadGif(Object object, ImageView imageView, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
-        load(imageView.getContext(), object, imageView, width, height, ic_loading, ic_failed, image_load, true, decodeFormat, null, diskCacheStrategy);
+    public static void loadGif(Object object, ImageView imageView, int failedId, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
+        load(imageView.getContext(), object, imageView, width, height, failedId, failedId, image_load, true, decodeFormat, null, diskCacheStrategy);
     }
 
     /**
@@ -160,13 +156,14 @@ public class ImageUtil {
      *
      * @param object            加载对象
      * @param imageView         显示控件
+     * @param failedId          占位图
      * @param width             重设宽度
      * @param height            重设高度
      * @param decodeFormat      图片质量
      * @param diskCacheStrategy 硬盘缓存策略
      */
-    public static void loadBitmap(Object object, ImageView imageView, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
-        load(imageView.getContext(), object, imageView, width, height, ic_loading, ic_failed, image_load, false, decodeFormat, null, diskCacheStrategy);
+    public static void loadBitmap(Object object, ImageView imageView, int failedId, int width, int height, DecodeFormat decodeFormat, DiskCacheStrategy diskCacheStrategy) {
+        load(imageView.getContext(), object, imageView, width, height, failedId, failedId, image_load, false, decodeFormat, null, diskCacheStrategy);
     }
 
 
@@ -175,6 +172,7 @@ public class ImageUtil {
      *
      * @param object            加载对象
      * @param imageView         显示控件
+     * @param failedId          占位图
      * @param width             重设宽度
      * @param height            重设高度
      * @param isGif             是否是Gif
@@ -182,8 +180,8 @@ public class ImageUtil {
      * @param transformation    图片转换
      * @param diskCacheStrategy 硬盘缓存策略
      */
-    public static void loadCircleImage(Object object, ImageView imageView, int width, int height, Boolean isGif, DecodeFormat decodeFormat, Transformation transformation, DiskCacheStrategy diskCacheStrategy) {
-        load(imageView.getContext(), object, imageView, width, height, ic_loading, ic_failed, image_load, isGif, decodeFormat, transformation, diskCacheStrategy);
+    public static void loadCircleImage(Object object, ImageView imageView, int failedId, int width, int height, Boolean isGif, DecodeFormat decodeFormat, Transformation transformation, DiskCacheStrategy diskCacheStrategy) {
+        load(imageView.getContext(), object, imageView, width, height, failedId, failedId, image_load, isGif, decodeFormat, transformation, diskCacheStrategy);
     }
 
     /**
@@ -360,10 +358,10 @@ public class ImageUtil {
      * 获取drawable路径
      *
      * @param context
-     * @param drawbleId
+     * @param drawableId
      * @return
      */
-    public String getDrawableUrl(Context context, int drawbleId) {
-        return "android.resource://" + context.getPackageName() + "/drawable/" + drawbleId;
+    public String getDrawableUrl(Context context, int drawableId) {
+        return "android.resource://" + context.getPackageName() + "/drawable/" + drawableId;
     }
 }

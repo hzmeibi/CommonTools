@@ -1,4 +1,7 @@
 package com.tools.base;
-public class CommonFragment {
+
+import com.trello.rxlifecycle.components.support.RxFragment;
+
+public class CommonFragment extends RxFragment{
 
 }

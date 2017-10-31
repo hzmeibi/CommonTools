@@ -1,12 +1,20 @@
 package com.tools.utils;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 
 import java.io.BufferedOutputStream;
@@ -46,7 +54,7 @@ public class FileUtil {
             File dir = new File(path);
             if (!dir.exists()) {
                 isOk = dir.mkdirs();
-            } else {
+            }else {
                 isOk = true;
             }
         } catch (Exception e) {
@@ -77,9 +85,9 @@ public class FileUtil {
      * @return
      * @throws Exception
      */
-    public static byte[] readStreamToBytes(InputStream in, String filePath) throws Exception {
+    public static byte[] readStreamToBytes(InputStream in,File file) throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        FileOutputStream o = new FileOutputStream(new File(filePath));
+        FileOutputStream o = new FileOutputStream(file);
         byte[] buffer = new byte[1024 * 8];
         int length = -1;
         while ((length = in.read(buffer)) != -1) {
@@ -200,5 +208,50 @@ public class FileUtil {
 
         return bitmap;
 
+    }
+
+    /**
+     * 根據文件Uri 獲取存儲路徑
+     *
+     * @param contentUri
+     * @param context
+     * @return
+     */
+    @SuppressLint("NewApi")
+    public static String getFilePath(Uri contentUri, Context context) {
+        String filePath = "$$";
+        boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+
+        if (isKitKat && DocumentsContract.isDocumentUri(context, contentUri)) {
+            String wholeID = DocumentsContract
+                    .getDocumentId(contentUri);
+            String id = wholeID.split(":")[1];
+            String[] column = {MediaStore.Images.Media.DATA};
+            String sel = MediaStore.Images.Media._ID + "=?";
+            Cursor cursor = context.getContentResolver().query(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    column, sel, new String[]{id}, null);
+            int columnIndex = cursor.getColumnIndex(column[0]);
+            if (cursor.moveToFirst()) {
+                filePath = cursor.getString(columnIndex);
+            }
+            cursor.close();
+        } else {
+            if (!TextUtils.isEmpty(contentUri.getAuthority())) {
+                Cursor cursor = context.getContentResolver().query(contentUri,
+                        new String[]{MediaStore.Images.Media.DATA},
+                        null, null, null);
+                if (null == cursor) {
+                    return "";
+                }
+                cursor.moveToFirst();
+                filePath = cursor.getString(cursor
+                        .getColumnIndex(MediaStore.Images.Media.DATA));
+                cursor.close();
+            } else {
+                filePath = contentUri.getPath();
+            }
+        }
+        return filePath;
     }
 }

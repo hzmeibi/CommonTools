@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 25
@@ -29,9 +29,16 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
     //glide
     compile 'com.github.bumptech.glide:glide:3.8.0'
-    //photoview
+    //PhotoView
     compile 'com.github.chrisbanes:PhotoView:2.1.2'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
+    //retrofit + rxjava + rxlifecycle
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.trello:rxlifecycle-components:0.8.0'
+    //fastjosn
+    compile 'com.alibaba:fastjson:1.2.39'
 }

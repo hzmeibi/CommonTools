@@ -89,3 +89,14 @@ MyToastView
 更新内容：
 		1.优化WebView返回键监听（针对主界面返回特殊处理）
 		2.完善BaseActivity
+
+-------------------------update---------------------
+版本编号：0.0.9
+更新时间：2017-10-31
+更新内容：
+        1.BaseActivity更名CommonActivity
+        2.BaseFragment更名为CommonFragment
+新增内容：
+       1.新增网络请求框架（RxJava + Retrofit + OkHttp +  FastJson）
+       2.新增图片显示框架（Glide）
+       3.添加MyApp基类
