@@ -2,11 +2,9 @@ package com.tools.base;
 
 import android.os.Bundle;
 import android.os.Process;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.tools.utils.AppManagerUtil;
-import com.tools.utils.PermissionsUtil;
 import com.tools.view.MyProgressDialog;
 import com.tools.view.MyToastView;
 import com.trello.rxlifecycle.components.support.RxFragmentActivity;
@@ -18,7 +16,7 @@ import com.trello.rxlifecycle.components.support.RxFragmentActivity;
  * 3.exitApp
  * 4.check Permission
  */
-public class CommonActivity extends RxFragmentActivity implements PermissionsUtil.PermissionCallbacks {
+public class CommonActivity extends RxFragmentActivity {
     //记录退出的时候的两次点击的间隔时间
     private long exitTime = 0;
     private MyToastView mMyToastView;
@@ -79,50 +77,5 @@ public class CommonActivity extends RxFragmentActivity implements PermissionsUti
             Process.killProcess(Process.myPid());
             System.exit(0);//正常退出App
         }
-    }
-
-    /**
-     * 6.0 运行时权限申请
-     *
-     * @param requestCode 请求码
-     * @return
-     */
-    public boolean checkPermission(int requestCode) {
-        return PermissionsUtil.requestCommonPermission(this, requestCode);
-    }
-
-    /**
-     * 6.0 运行时权限申请
-     *
-     * @param requestCode 请求码
-     * @param permissions 请求权限
-     * @return
-     */
-    public boolean checkPermission(int requestCode, String... permissions) {
-        if (PermissionsUtil.hasPermissions(this, permissions)) {
-            return true;
-        } else {
-            PermissionsUtil.requestPermissions(this, "", requestCode, permissions);
-            return false;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        //init permission
-        PermissionsUtil.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, String perms) {
-        //Granted
-
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, String perms, String never) {
-        //Denied
-
     }
 }

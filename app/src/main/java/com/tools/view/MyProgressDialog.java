@@ -3,8 +3,6 @@ package com.tools.view;
 import android.app.ProgressDialog;
 import android.content.Context;
 
-import java.lang.ref.WeakReference;
-
 /**
  * 加载视图
  * 使用系统的ProgressDialog
@@ -12,11 +10,9 @@ import java.lang.ref.WeakReference;
 public class MyProgressDialog {
     private Context mContext;
     private ProgressDialog progress;
-    private WeakReference<Context> contextReference;
 
     public MyProgressDialog(Context context) {
-        contextReference = new WeakReference<>(context);
-        mContext = contextReference.get();
+        mContext = context;
     }
 
     /**

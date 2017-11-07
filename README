@@ -100,3 +100,12 @@ MyToastView
        1.新增网络请求框架（RxJava + Retrofit + OkHttp +  FastJson）
        2.新增图片显示框架（Glide）
        3.添加MyApp基类
+
+-------------------------update---------------------
+版本编号：0.1.0
+更新时间：2017-11-07
+更新内容：
+        1.优化6.0权限管理
+        2.CommonFragment添加RxLifeCycle
+新增内容：
+       1.添加设备信息工具类 DeviceInfoUtil.class
