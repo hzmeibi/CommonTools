@@ -25,6 +25,11 @@ public class MyProgressDialog {
         setMessage(mContext.getResources().getString(id));
     }
 
+    public void showProgress(String str) {
+        showProgress();
+        setMessage(str);
+    }
+
     /**
      * 通过setMessage和showProgress，可以实现进度条的显示 在按后退键的时候消失且不会再弹对话框。
      *

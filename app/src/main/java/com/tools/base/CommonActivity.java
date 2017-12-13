@@ -47,6 +47,19 @@ public class CommonActivity extends RxFragmentActivity {
     }
 
     /**
+     * show progress
+     *
+     * @param message
+     */
+    public void showProgress(String message) {
+        if (mMyProgressDialog == null) {
+            mMyProgressDialog = new MyProgressDialog(this);
+        }
+        mMyProgressDialog.showProgress(message);
+    }
+
+
+    /**
      * dismiss progress
      */
     public void dismissProgress() {
@@ -59,6 +72,18 @@ public class CommonActivity extends RxFragmentActivity {
      * @param message
      */
     public void showToast(int message) {
+        if (mMyToastView == null) {
+            mMyToastView = new MyToastView(this);
+        }
+        mMyToastView.show(message);
+    }
+
+    /**
+     * show Toast
+     *
+     * @param message
+     */
+    public void showToast(String message) {
         if (mMyToastView == null) {
             mMyToastView = new MyToastView(this);
         }
