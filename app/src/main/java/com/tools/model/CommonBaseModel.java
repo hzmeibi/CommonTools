@@ -8,8 +8,8 @@ import java.io.Serializable;
  */
 public class CommonBaseModel<T> implements Serializable {
     private String msg;
-    private String status;//200 成功
-    private T result;
+    private String code;//200 成功
+    private T data;
 
     public String getMsg() {
         return msg;
@@ -19,19 +19,19 @@ public class CommonBaseModel<T> implements Serializable {
         this.msg = msg;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCode() {
+        return code;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public T getResult() {
-        return result;
+    public T getData() {
+        return data;
     }
 
-    public void setResult(T result) {
-        this.result = result;
+    public void setData(T data) {
+        this.data = data;
     }
 }

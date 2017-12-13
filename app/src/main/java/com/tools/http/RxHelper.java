@@ -53,11 +53,11 @@ public class RxHelper {
         };
     }
 
-    public static Observable.Transformer bindRxLifecycle(final CommonActivity context){
+    public static Observable.Transformer bindRxLifecycle(final CommonActivity context) {
         return new Observable.Transformer() {
             @Override
             public Object call(Object o) {
-                return ((Observable)o).compose(RxLifecycle.bindUntilEvent(context.lifecycle(), ActivityEvent.STOP));
+                return ((Observable) o).compose(RxLifecycle.bindUntilEvent(context.lifecycle(), ActivityEvent.STOP));
             }
         };
     }
@@ -93,12 +93,12 @@ public class RxHelper {
                             return;
                         }
                         LogUtil.e(TAG, JsonUtil.toJsonString(baseModel));
-                        String state = baseModel.getStatus();
+                        String state = baseModel.getCode();
                         //需要先判断状态值 具体情况根据实际项目
                         if (!TextUtils.isEmpty(state) && state.equals("200")) {
                             //请求成功  data可能为空
-                            if (baseModel.getResult() != null) {
-                                String data = baseModel.getResult().toString();
+                            if (baseModel.getData() != null) {
+                                String data = baseModel.getData().toString();
                                 //成功 根据返回数据类型 解析对应数据  对象 集合
                                 int type = JsonUtil.getJSONType(data);
                                 if (type == 0) {
@@ -130,6 +130,7 @@ public class RxHelper {
                             LogUtil.e(TAG, msg);
                             //失败
                             mHttpCallback.onFailure(Integer.valueOf(state));//返回处理错误码
+                            mHttpCallback.onFailure(msg);//返回错误提示信息 直接提示
                         }
                     }
 

@@ -29,5 +29,8 @@ public abstract class HttpCallback implements HttpInterface {
 
     }
 
+    @Override
+    public void onFailure(String msg) {
 
+    }
 }

@@ -40,4 +40,12 @@ public interface HttpInterface<T> {
     void onFailure(int status);
 
 
+    /**
+     * 请求失败,返回提示信息
+     *
+     * @param msg String
+     */
+    void onFailure(String msg);
+
+
 }
