@@ -16,15 +16,17 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
  */
 public class RetrofitManager {
     private volatile static RetrofitManager INSTANCE;
-    private OkHttpClient client;
     private static Retrofit retrofit;
 
     public RetrofitManager() {
-        client = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        OkHttpClient client = builder
                 .connectTimeout(60, TimeUnit.SECONDS)// 连接超时时间设置
                 .readTimeout(60, TimeUnit.SECONDS)// 读取超时时间设置
                 .retryOnConnectionFailure(false)// 失败重试
                 .build();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.baidu.com/")//base url 必须要以"/"结束
                 .addConverterFactory(FastjsonConverterFactory.create())

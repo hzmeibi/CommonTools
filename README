@@ -109,3 +109,17 @@ MyToastView
         2.CommonFragment添加RxLifeCycle
 新增内容：
        1.添加设备信息工具类 DeviceInfoUtil.class
+
+-------------------------update---------------------
+版本编号：0.1.1
+更新时间：2017-12-13
+更新内容：
+        1.优化TextLink 支持多个超连接
+        2.优化WebView定位问题 （仅部分手机有效）
+新增内容：
+       1.新增支持SFTP
+       2.新增网络请求添加请求头
+       3.新增TouchClear 支持放大、缩小
+       4.新增视图蒙版
+       5.新增PhotoView
+

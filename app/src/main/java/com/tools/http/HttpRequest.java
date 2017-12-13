@@ -11,6 +11,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -23,6 +24,7 @@ import rx.Observable;
 /**
  * Created by milo on 16/10/25.
  * 封装网络请求
+ * 说明：方法后带1 表示带请求头
  */
 public interface HttpRequest {
     /**
@@ -36,6 +38,11 @@ public interface HttpRequest {
     @GET
     Observable<CommonBaseModel> get(@Url String url);
 
+
+    @GET
+    Observable<CommonBaseModel> get1(@Url String url, @HeaderMap Map<String, String> headers);
+
+
     /**
      * 异步get请求，有请求参数
      *
@@ -45,6 +52,8 @@ public interface HttpRequest {
     @GET
     Observable<CommonBaseModel> get(@Url String url, @QueryMap Map<String, Object> params);
 
+    @GET
+    Observable<CommonBaseModel> get1(@Url String url, @HeaderMap Map<String, String> headers, @QueryMap Map<String, Object> params);
 
     /**
      * 异步post请求，无请求参数
@@ -53,6 +62,9 @@ public interface HttpRequest {
      */
     @POST
     Observable<CommonBaseModel> post(@Url String url);
+
+    @POST
+    Observable<CommonBaseModel> post1(@Url String url, @HeaderMap Map<String, String> headers);
 
     /**
      * 异步post请求，有请求参数
@@ -64,6 +76,10 @@ public interface HttpRequest {
     @POST
     Observable<CommonBaseModel> post(@Url String url, @FieldMap Map<String, Object> params);
 
+    @FormUrlEncoded
+    @POST
+    Observable<CommonBaseModel> post1(@Url String url, @HeaderMap Map<String, String> headers, @FieldMap Map<String, Object> params);
+
     /**
      * 异步delete请求，有请求参数
      *
@@ -72,6 +88,9 @@ public interface HttpRequest {
      */
     @DELETE
     Observable<CommonBaseModel> delete(@Url String url, @QueryMap Map<String, Object> params);
+
+    @DELETE
+    Observable<CommonBaseModel> delete1(@Url String url, @HeaderMap Map<String, String> headers, @QueryMap Map<String, Object> params);
 
     /**
      * 异步put请求，有请求参数
@@ -84,6 +103,10 @@ public interface HttpRequest {
     Observable<CommonBaseModel> put(@Url String url, @FieldMap Map<String, Object> params);
 
 
+    @FormUrlEncoded
+    @PUT
+    Observable<CommonBaseModel> put1(@Url String url, @HeaderMap Map<String, String> headers, @FieldMap Map<String, Object> params);
+
     /**
      * 异步get请求，无请求参数
      *
@@ -93,15 +116,21 @@ public interface HttpRequest {
     @GET
     Observable<ResponseBody> download(@Url String url);
 
+    @Streaming
+    @GET
+    Observable<ResponseBody> download1(@Url String url, @HeaderMap Map<String, String> headers);
+
     /**
      * 异步get请求，有请求参数
      *
      * @param url    请求url
      * @param params 请求参数 hashmap键值对
      */
-//    @Streaming
     @POST
     Observable<ResponseBody> download(@Url String url, @Body Map<String, Object> params);
+
+    @POST
+    Observable<ResponseBody> download1(@Url String url, @HeaderMap Map<String, String> headers, @Body Map<String, Object> params);
 
     /**
      * 文件上传
@@ -125,4 +154,8 @@ public interface HttpRequest {
     @POST
     Observable<CommonBaseModel> upload(@Url String url, @PartMap Map<String, RequestBody> params);
 
+
+    @Multipart
+    @POST
+    Observable<CommonBaseModel> upload1(@Url String url, @HeaderMap Map<String, String> headers, @PartMap Map<String, RequestBody> params);
 }

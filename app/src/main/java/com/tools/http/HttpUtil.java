@@ -114,6 +114,26 @@ public class HttpUtil {
      *
      * @param activity     上下文
      * @param url          网址
+     * @param headers      请求头
+     * @param tClass       解析对象
+     * @param httpCallback 回调接口
+     */
+    public static void getCallback(CommonActivity activity, String url, Map<String, String> headers, Class tClass, HttpCallback httpCallback) {
+        //判断是否需要从缓存中取数据
+        if (getCacheSuccess(activity, url, tClass, httpCallback)) {
+            return;
+        }
+        subscription = getHttpRequest()
+                .get1(url, headers)
+                .compose(RxHelper.<CommonBaseModel>setObservable(activity));
+        RxHelper.setSubscriptionToString(activity, url, subscription, tClass, httpCallback);
+    }
+
+    /**
+     * get
+     *
+     * @param activity     上下文
+     * @param url          网址
      * @param tClass       解析对象
      * @param params       请求参数
      * @param httpCallback 回调接口
@@ -125,6 +145,27 @@ public class HttpUtil {
         }
         subscription = getHttpRequest()
                 .get(url, params)
+                .compose(RxHelper.<CommonBaseModel>setObservable(activity));
+        RxHelper.setSubscriptionToString(activity, url, subscription, tClass, httpCallback);
+    }
+
+    /**
+     * get
+     *
+     * @param activity     上下文
+     * @param url          网址
+     * @param headers      请求头
+     * @param tClass       解析对象
+     * @param params       请求参数
+     * @param httpCallback 回调接口
+     */
+    public static void getCallback(final CommonActivity activity, String url, Map<String, String> headers, Class tClass, Map<String, Object> params, HttpCallback httpCallback) {
+        //判断是否需要从缓存中取数据
+        if (getCacheSuccess(activity, url, tClass, httpCallback)) {
+            return;
+        }
+        subscription = getHttpRequest()
+                .get1(url, headers, params)
                 .compose(RxHelper.<CommonBaseModel>setObservable(activity));
         RxHelper.setSubscriptionToString(activity, url, subscription, tClass, httpCallback);
     }
@@ -154,6 +195,26 @@ public class HttpUtil {
      *
      * @param activity     上下文
      * @param url          网址
+     * @param headers      请求头
+     * @param tClass       解析对象
+     * @param httpCallback 回调接口
+     */
+    public static void postCallback(CommonActivity activity, String url, Map<String, String> headers, Class tClass, HttpCallback httpCallback) {
+        //判断是否需要从缓存中取数据
+        if (getCacheSuccess(activity, url, tClass, httpCallback)) {
+            return;
+        }
+        subscription = getHttpRequest()
+                .post1(url, headers)
+                .compose(RxHelper.<CommonBaseModel>setObservable(activity));
+        RxHelper.setSubscriptionToString(activity, url, subscription, tClass, httpCallback);
+    }
+
+    /**
+     * post
+     *
+     * @param activity     上下文
+     * @param url          网址
      * @param tClass       解析对象
      * @param params       请求参数
      * @param httpCallback 回调接口
@@ -171,6 +232,28 @@ public class HttpUtil {
 
 
     /**
+     * post
+     *
+     * @param activity     上下文
+     * @param url          网址
+     * @param headers      请求头
+     * @param tClass       解析对象
+     * @param params       请求参数
+     * @param httpCallback 回调接口
+     */
+    public static void postCallback(final CommonActivity activity, String url, Map<String, String> headers, Class tClass, Map<String, Object> params, HttpCallback httpCallback) {
+        //判断是否需要从缓存中取数据
+        if (getCacheSuccess(activity, url, tClass, httpCallback)) {
+            return;
+        }
+        subscription = getHttpRequest()
+                .post1(url, headers, params)
+                .compose(RxHelper.<CommonBaseModel>setObservable(activity));
+        RxHelper.setSubscriptionToString(activity, url, subscription, tClass, httpCallback);
+    }
+
+
+    /**
      * upload
      *
      * @param activity     上下文
@@ -182,6 +265,24 @@ public class HttpUtil {
     public static void upload(final CommonActivity activity, String url, Class tClass, Map<String, RequestBody> params, HttpCallback httpCallback) {
         subscription = getHttpRequest()
                 .upload(url, params)
+                .compose(RxHelper.<CommonBaseModel>setObservable(activity));
+        RxHelper.setSubscriptionToString(activity, url, subscription, tClass, httpCallback);
+    }
+
+
+    /**
+     * upload
+     *
+     * @param activity     上下文
+     * @param url          网址
+     * @param headers      请求头
+     * @param tClass       解析对象
+     * @param params       请求参数
+     * @param httpCallback 回调接口
+     */
+    public static void upload(final CommonActivity activity, String url, Map<String, String> headers, Class tClass, Map<String, RequestBody> params, HttpCallback httpCallback) {
+        subscription = getHttpRequest()
+                .upload1(url, headers, params)
                 .compose(RxHelper.<CommonBaseModel>setObservable(activity));
         RxHelper.setSubscriptionToString(activity, url, subscription, tClass, httpCallback);
     }
@@ -206,14 +307,47 @@ public class HttpUtil {
      *
      * @param activity     上下文
      * @param url          网址
+     * @param headers      请求头
+     * @param file         保存文件
+     * @param httpCallback 回调接口
+     */
+    public static void download(CommonActivity activity, String url, Map<String, String> headers, File file, HttpCallback httpCallback) {
+        Observable<ResponseBody> subscription = getHttpRequest()
+                .download1(url, headers)
+                .compose(RxHelper.<ResponseBody>setObservable(activity));
+        RxHelper.setSubscriptionToByte(subscription, file, httpCallback);
+    }
+
+    /**
+     * download binary
+     *
+     * @param activity     上下文
+     * @param url          网址
      * @param file         文件
      * @param params       请求参数
      * @param httpCallback 回调接口
      */
-
     public static void download(final CommonActivity activity, String url, File file, Map<String, Object> params, HttpCallback httpCallback) {
         Observable<ResponseBody> subscription = getHttpRequest()
                 .download(url, params)
+                .compose(RxHelper.<ResponseBody>setObservable(activity));
+        RxHelper.setSubscriptionToByte(subscription, file, httpCallback);
+    }
+
+
+    /**
+     * download binary
+     *
+     * @param activity     上下文
+     * @param url          网址
+     * @param headers      请求头
+     * @param file         文件
+     * @param params       请求参数
+     * @param httpCallback 回调接口
+     */
+    public static void download(final CommonActivity activity, String url, Map<String, String> headers, File file, Map<String, Object> params, HttpCallback httpCallback) {
+        Observable<ResponseBody> subscription = getHttpRequest()
+                .download1(url, headers, params)
                 .compose(RxHelper.<ResponseBody>setObservable(activity));
         RxHelper.setSubscriptionToByte(subscription, file, httpCallback);
     }

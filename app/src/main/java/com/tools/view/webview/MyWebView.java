@@ -40,7 +40,6 @@ public class MyWebView extends LinearLayout {
     private MyCallBack mMyCallBack;
     private MyWebViewClient mMyWebViewClient;
     private MyWebChromeClient mMyWebChromeClient;
-    private goBackListener mGoBackListener;
     private List<String> mainPages;
 
     public MyWebView(Context context) {
@@ -72,10 +71,6 @@ public class MyWebView extends LinearLayout {
             mWebView = new BridgeWebView(context);
         }
         mMyCallBack = myCallBack;
-        //init webiewClient webChromeClient
-        setMyWebViewClient();
-        setMyWebChromeClient();
-
         WebSettings webviewSettings = mWebView.getSettings();
         // 判断系统版本是不是5.0或之上
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -85,13 +80,16 @@ public class MyWebView extends LinearLayout {
         }
         // 不支持缩放
         webviewSettings.setSupportZoom(false);
-
         // 自适应屏幕大小
         webviewSettings.setUseWideViewPort(true);
         webviewSettings.setLoadWithOverviewMode(true);
-
+        //webview定位相关设置 6.0以下正常  6.0 会存在问题 没有解决  暂时先使用原生定位替代
+        webviewSettings.setDatabaseEnabled(true);
+        String dir = mWebView.getContext().getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
+        webviewSettings.setGeolocationDatabasePath(dir);
+        webviewSettings.setDomStorageEnabled(true);
+        webviewSettings.setGeolocationEnabled(true);
         addView(mWebView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
         //返回键监听 主界面返回提醒
         mWebView.setOnKeyListener(new OnKeyListener() {
             @Override
@@ -120,6 +118,9 @@ public class MyWebView extends LinearLayout {
                 return true;
             }
         });
+        //init webiewClient webChromeClient
+        setMyWebViewClient();
+        setMyWebChromeClient();
         loadUrl(url);//load
     }
 
