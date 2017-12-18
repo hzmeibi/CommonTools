@@ -131,3 +131,12 @@ MyToastView
         2.MyProgressDialog 支持中文
 新增内容：
 
+-------------------------update---------------------
+版本编号：0.1.3
+更新时间：2017-12-18
+更新内容：
+        1.MyToastView 支持中文
+        2.MyProgressDialog 支持中文
+新增内容：
+        1.新增 EditTextWithClear
+        2.新增LanguageUtil
